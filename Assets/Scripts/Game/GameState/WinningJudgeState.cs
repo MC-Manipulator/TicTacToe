@@ -4,5 +4,43 @@ using UnityEngine;
 
 public class WinningJudgeState : AbstractGameState
 {
+    private int currentPlayerNumber;
 
+    public WinningJudgeState(int currentPlayerNumber)
+    {
+        this.currentPlayerNumber = currentPlayerNumber;
+    }
+
+    public override void StateEnter()
+    {
+        if (GameManager.Instance.BoardInfo.JugdeChessInLine())
+        {
+            GameManager.Instance.Controller.ChangeState(new GameEndState(currentPlayerNumber), false);
+        }
+        else
+        {
+            if (GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode == GameMode.Computer)
+            {
+                if (currentPlayerNumber == 1)
+                {
+                    GameManager.Instance.Controller.ChangeState(new ComputerTurnState(), true);
+                }
+                else
+                {
+                    GameManager.Instance.Controller.ChangeState(new PlayerTurnState(1), false);
+                }
+            }
+            else
+            {
+                if (currentPlayerNumber == 2)
+                {
+                    GameManager.Instance.Controller.ChangeState(new PlayerTurnState(1), false);
+                }
+                else
+                {
+                    GameManager.Instance.Controller.ChangeState(new PlayerTurnState(2), false);
+                }
+            }
+        }
+    }
 }

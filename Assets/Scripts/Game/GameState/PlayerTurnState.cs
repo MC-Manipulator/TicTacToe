@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerTurnState : AbstractGameState
 {
-    public override void StateEnter()
+    public PlayerTurnState(int playerNumber)
     {
-
+        this.playerNumber = playerNumber;
     }
 
+    public int playerNumber
+    {
+        get; private set;
+    }
 
-    public override void StateExit()
+    public override void StateEnter()
     {
 
     }
