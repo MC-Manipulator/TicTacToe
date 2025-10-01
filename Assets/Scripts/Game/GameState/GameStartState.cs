@@ -13,16 +13,16 @@ public class GameStartState : AbstractGameState
         {
             if (Random.Range(0, 1) == 0)
             {
-                GameManager.Instance.Controller.ChangeState(new PlayerTurnState(1), true);
+                GameManager.Instance.Controller.ChangeState(new PlayerTurnState(1), false);
             }
             else
-            {
+            {   
                 GameManager.Instance.Controller.ChangeState(new ComputerTurnState(), true);
             }
         }
         else
         {
-            GameManager.Instance.Controller.ChangeState(new PlayerTurnState(Random.Range(1, 2)), true);
+            GameManager.Instance.Controller.ChangeState(new PlayerTurnState(Random.Range(1, 2)), false);
         }
     }
 }

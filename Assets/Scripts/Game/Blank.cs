@@ -46,7 +46,7 @@ public class Blank : MonoBehaviour
         }
     }
 
-    private int playerChessPlaced;
+    private int playerChessPlaced; //用于标记该格子放置棋子的玩家，0表示空位，1表示玩家1放置棋子，2表示玩家2或电脑放置棋子
     public int PlayerChessPlaced
     {
         get
@@ -74,6 +74,14 @@ public class Blank : MonoBehaviour
         {
             PlayerChessPlaced = ((PlayerTurnState)GameManager.Instance.Controller.CurrentGameState).playerNumber;
             GameManager.Instance.PlayerPlaceChess(row, col);
+        }
+    }
+
+    public void ComputerPlaceChess()
+    {
+        if (GameManager.Instance.Controller.CurrentGameState is ComputerTurnState && playerChessPlaced == 0)
+        {
+            PlayerChessPlaced = 2;
         }
     }
 

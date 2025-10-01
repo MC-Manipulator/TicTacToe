@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameEndState : AbstractGameState
 {
-    private int winnerNumber;
+    private int winnerNumber; //0:平局 1:玩家1获胜 2:玩家2获胜/电脑获胜
 
     public GameEndState(int winnerNumber)
     {
@@ -15,18 +15,29 @@ public class GameEndState : AbstractGameState
     {
         if (GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode == GameMode.Computer)
         {
-            if (winnerNumber == 1)
+            if (winnerNumber == 0)
+            {
+                Debug.Log("游戏结束，平局");
+            }
+            else if (winnerNumber == 1)
             {
                 Debug.Log("游戏结束，玩家获胜");
             }
-            else
+            else if (winnerNumber == 2)
             {
                 Debug.Log("游戏结束，电脑获胜");
             }
         }
         else
         {
-            Debug.Log("游戏结束，玩家" + winnerNumber + "获胜");
+            if (winnerNumber == 0)
+            {
+                Debug.Log("游戏结束，平局");
+            }
+            else
+            {
+                Debug.Log("游戏结束，玩家" + winnerNumber + "获胜");
+            }
         }
     }
 }

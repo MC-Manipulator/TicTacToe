@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0;j < GameInfoManager.Instance.CurrentGameInfo.BoardSize;j++)
             {
-                GameObject newBlank = Instantiate(BlankPrefab);
+                GameObject newBlank = Instantiate(BlankPrefab); 
+                BlankObjectList.Add(newBlank);
                 newBlank.transform.parent = GameObject.Find("Board").transform;
                 newBlank.transform.position = new Vector2(
                     -GameInfoManager.Instance.CurrentGameInfo.BoardSize / 2f + i * 2 - 0.5f,
@@ -79,6 +80,15 @@ public class GameManager : MonoBehaviour
     public void ComputerPlaceChess(int row, int col)
     {
         BoardInfo.PlaceChess(2, row, col);
+        foreach (GameObject gb in BlankObjectList)
+        {
+            Blank blank = gb.GetComponent<Blank>();
+            if (blank.Col == col && blank.Row == row)
+            {
+                blank.ComputerPlaceChess();
+                break;
+            }
+        }
         GameManager.Instance.Controller.ChangeState(new WinningJudgeState(2), true);
     }
 }

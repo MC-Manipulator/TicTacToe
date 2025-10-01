@@ -16,9 +16,16 @@ public class WinningJudgeState : AbstractGameState
         if (GameManager.Instance.BoardInfo.JugdeChessInLine())
         {
             GameManager.Instance.Controller.ChangeState(new GameEndState(currentPlayerNumber), false);
+            return;
         }
         else
         {
+            if (GameManager.Instance.BoardInfo.IsFull())
+            {
+                GameManager.Instance.Controller.ChangeState(new GameEndState(0), false);
+                return;
+            }
+
             if (GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode == GameMode.Computer)
             {
                 if (currentPlayerNumber == 1)
@@ -42,5 +49,6 @@ public class WinningJudgeState : AbstractGameState
                 }
             }
         }
+
     }
 }

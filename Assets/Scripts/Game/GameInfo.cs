@@ -48,7 +48,7 @@ public class GameInfo
         }
         set
         {
-            CurrentDifficulty = value;
+            currentDifficulty = value;
         }
     }
 

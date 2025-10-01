@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public enum GameLanguage
 {
@@ -35,19 +36,37 @@ public class GameSettingManager : MonoBehaviour
 
     public void SetLanguage(string language, bool save)
     {
+        if (_active)
+        {
+            return;
+        }
+
         switch (language)
         {
             case "Chinese":
                 currentLanguage = GameLanguage.Chinese;
+                StartCoroutine(SetLocale(0));
                 break;
             case "English":
                 currentLanguage = GameLanguage.English;
+                StartCoroutine(SetLocale(1));
                 break;
         }
 
         if (save)
             SaveSettings();
     }
+
+    private bool _active = false;
+
+    private IEnumerator SetLocale(int localID)
+    {
+        _active = true;
+        yield return LocalizationSettings.InitializationOperation;
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localID];
+        _active = false;
+    }
+
 
     public void SaveSettings()
     {
