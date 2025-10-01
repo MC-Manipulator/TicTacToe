@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +15,15 @@ public class GameManager : MonoBehaviour
 
     [Header("GameObject Referrence")]
     public List<GameObject> BlankObjectList;
+
+    [Header("UI Referrence")]
+    public GameObject PausePanel;
+    public GameObject EndPanel;
+    public TMP_Text EndPanelTitle;
+    public TMP_Text TurnStatementText;
+
+    [Header("Audio Referrence")]
+    public List<AudioClip> AudioClips; // 0:select 1:confirm 2:confirm 3:back
 
     private void Awake()
     {
@@ -90,5 +101,50 @@ public class GameManager : MonoBehaviour
             }
         }
         GameManager.Instance.Controller.ChangeState(new WinningJudgeState(2), true);
+    }
+
+    public void Pause()
+    {
+        AudioManager.Instance.PlaySound(AudioClips[2]);
+        PausePanel.SetActive(true);
+    }
+
+    public void Resume()
+    {
+        AudioManager.Instance.PlaySound(AudioClips[2]);
+        PausePanel.SetActive(false);
+    }
+
+    public void OpenEndPanel(string endTitle)
+    {
+        EndPanelTitle.text = endTitle;
+        EndPanel.SetActive(true);
+    }
+
+    public void CloseEndPanel()
+    {
+        EndPanel.SetActive(false);
+    }
+
+    public void RestartGame()
+    {
+        AudioManager.Instance.PlaySound(AudioClips[2]);
+        Controller.ChangeState(new GameStartState(), false);
+        CloseEndPanel();
+    }
+
+    public void ReturnToMenu()
+    {
+        AudioManager.Instance.PlaySound(AudioClips[2]);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GameExit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class ComputerTurnState : AbstractGameState
 {
+    public string tableName = "Table";
+
     public override void StateEnter()
     {
+        string trunStatement =
+            new LocalizedString(tableName, "ComputerTurn").GetLocalizedString();
+        GameManager.Instance.TurnStatementText.text = trunStatement;
+
         Vector2 selectBlank = new Vector2();
         if (GameInfoManager.Instance.CurrentGameInfo.CurrentDifficulty == ComputerDifficulty.Eazy)
         {
