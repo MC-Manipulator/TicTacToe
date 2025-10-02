@@ -70,7 +70,7 @@ public class Blank : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameManager.Instance.Controller.CurrentGameState is PlayerTurnState && playerChessPlaced == 0)
+        if (GameManager.Instance.Controller.CurrentGameState is PlayerTurnState && playerChessPlaced == 0 && GameManager.Instance.isPaused == false)
         {
             PlayerChessPlaced = ((PlayerTurnState)GameManager.Instance.Controller.CurrentGameState).playerNumber;
             GameManager.Instance.PlayerPlaceChess(row, col);

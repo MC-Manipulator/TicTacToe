@@ -15,12 +15,9 @@ public class SettingPanelController : MonoBehaviour
     public TMP_Dropdown ResolutonDropdown;
     public Toggle FullscreenToggle;
 
-    [Header("Audio Referrence")]
-    public List<AudioClip> AudioClips; // 0:select 1:confirm 2:confirm 3:back
-
     public void OpenSettingPanel()
     {
-        AudioManager.Instance.PlaySound(AudioClips[0]);
+        AudioManager.Instance.PlaySFX("select");
         SettingPanel.SetActive(true);
         MasterVolumeSlider.value = AudioManager.Instance.MasterVolume;
         BGMVolumeSlider.value = AudioManager.Instance.BGMVolume;
@@ -46,7 +43,7 @@ public class SettingPanelController : MonoBehaviour
 
     public void CloseSettingPanel()
     {
-        AudioManager.Instance.PlaySound(AudioClips[3]);
+        AudioManager.Instance.PlaySFX("back");
         SettingPanel.SetActive(false);
     }
 
@@ -80,7 +77,7 @@ public class SettingPanelController : MonoBehaviour
             }
         }
         button.interactable = false;
-        AudioManager.Instance.PlaySound(AudioClips[1]);
+        AudioManager.Instance.PlaySFX("switch");
         GameSettingManager.Instance.SetLanguage(button.name.ToString(), true);
     }
 
@@ -100,6 +97,6 @@ public class SettingPanelController : MonoBehaviour
 
     public void SetFullScreen(Toggle toggle)
     {
-        GameSettingManager.Instance.SetFullScreen(toggle.isOn);
+        GameSettingManager.Instance.SetFullScreen(toggle.isOn, true);
     }
 }

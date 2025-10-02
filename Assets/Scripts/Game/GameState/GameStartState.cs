@@ -11,7 +11,7 @@ public class GameStartState : AbstractGameState
 
         if (GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode == GameMode.Computer)
         {
-            if (Random.Range(0, 1) == 0)
+            if (Random.Range(0, 2) == 0)
             {
                 GameManager.Instance.Controller.ChangeState(new PlayerTurnState(1), false);
             }

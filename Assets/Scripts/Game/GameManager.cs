@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public StateController Controller;
     public BoardInfo BoardInfo;
+    public bool isPaused;
 
     [Header("Prefab")]
     public GameObject BlankPrefab;
@@ -22,9 +23,6 @@ public class GameManager : MonoBehaviour
     public TMP_Text EndPanelTitle;
     public TMP_Text TurnStatementText;
 
-    [Header("Audio Referrence")]
-    public List<AudioClip> AudioClips; // 0:select 1:confirm 2:confirm 3:back
-
     private void Awake()
     {
         if (Instance == null)
@@ -37,11 +35,13 @@ public class GameManager : MonoBehaviour
         }
 
         Controller = new StateController(this);
+        isPaused = false;
     }
 
     void Start()
     {
         Controller.ChangeState(new GameStartState(), false);
+        AudioManager.Instance.PlayBGM("game");
     }
 
     public void GenerateNewBoard()
@@ -64,8 +64,8 @@ public class GameManager : MonoBehaviour
                 BlankObjectList.Add(newBlank);
                 newBlank.transform.parent = GameObject.Find("Board").transform;
                 newBlank.transform.position = new Vector2(
-                    -GameInfoManager.Instance.CurrentGameInfo.BoardSize / 2f + i * 2 - 0.5f,
-                    -GameInfoManager.Instance.CurrentGameInfo.BoardSize / 2f + j * 2 - 0.5f);
+                    -GameInfoManager.Instance.CurrentGameInfo.BoardSize / 2f + j * 2 - 0.5f,
+                    -GameInfoManager.Instance.CurrentGameInfo.BoardSize / 2f + i * 2 - 0.5f);
                 newBlank.GetComponent<Blank>().Row = i;
                 newBlank.GetComponent<Blank>().Col = j;
             }
@@ -105,14 +105,16 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
-        AudioManager.Instance.PlaySound(AudioClips[2]);
+        AudioManager.Instance.PlaySFX("confirm");
         PausePanel.SetActive(true);
+        isPaused = true;
     }
 
     public void Resume()
     {
-        AudioManager.Instance.PlaySound(AudioClips[2]);
+        AudioManager.Instance.PlaySFX("confirm");
         PausePanel.SetActive(false);
+        isPaused = false;
     }
 
     public void OpenEndPanel(string endTitle)
@@ -128,14 +130,14 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        AudioManager.Instance.PlaySound(AudioClips[2]);
+        AudioManager.Instance.PlaySFX("confirm");
         Controller.ChangeState(new GameStartState(), false);
         CloseEndPanel();
     }
 
     public void ReturnToMenu()
     {
-        AudioManager.Instance.PlaySound(AudioClips[2]);
+        AudioManager.Instance.PlaySFX("confirm");
         SceneManager.LoadScene("MainMenu");
     }
 

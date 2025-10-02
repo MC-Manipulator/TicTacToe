@@ -74,6 +74,8 @@ public class GameSettingManager : MonoBehaviour
 
         PlayerPrefs.SetInt("ScreenWidth", screenWidth);
         PlayerPrefs.SetInt("ScreenHeight", screenHeight);
+
+        PlayerPrefs.SetInt("FullScreen", isFullScreen ? 1 : 0);
     }
 
     private void LoadSettings()
@@ -83,6 +85,15 @@ public class GameSettingManager : MonoBehaviour
             PlayerPrefs.GetInt("ScreenWidth", 1920), 
             PlayerPrefs.GetInt("ScreenHeight", 1080), 
             false);
+
+        if (PlayerPrefs.GetInt("FullScreen", 1) == 1)
+        {
+            SetFullScreen(true, false);
+        }
+        else
+        {
+            SetFullScreen(false, false);
+        }
     }
 
     public void SetScreenResolution(int width, int height, bool save)
@@ -99,9 +110,12 @@ public class GameSettingManager : MonoBehaviour
             SaveSettings();
     }
 
-    public void SetFullScreen(bool full)
+    public void SetFullScreen(bool full, bool save)
     {
         isFullScreen = full;
         Screen.fullScreen = full;
+
+        if (save)
+            SaveSettings();
     }
 }

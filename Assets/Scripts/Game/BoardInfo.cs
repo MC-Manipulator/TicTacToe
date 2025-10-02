@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardInfo
@@ -23,6 +24,307 @@ public class BoardInfo
             }
             boardDoubleList.Add(list);
         }
+    }
+
+    public List<Vector2> GetRowNearlyALineBlank(int playerNumber)
+    {
+        List<Vector2> list = new List<Vector2>();
+
+        int mostCount = 0;
+        int row = 0;
+
+        for (int i = 0; i < boardSize; i++)
+        {
+            int count = 0;
+            int blank = 0;
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (boardDoubleList[i][j] == playerNumber)
+                {
+                    count++;
+                }
+                if (boardDoubleList[i][j] == 0)
+                {
+                    blank++;
+                }
+            }
+            if (count > mostCount && blank != 0)
+            {
+                mostCount = count;
+                row = i;
+            }
+        }
+
+        for (int j = 0; j < boardSize; j++)
+        {
+            if (boardDoubleList[row][j] == 0)
+            {
+                list.Add(new Vector2(row, j));
+            }
+        }
+
+        return list;
+    }
+
+    public int GetRowNearlyALineCount(int playerNumber)
+    {
+        List<Vector2> list = new List<Vector2>();
+
+        int mostCount = 0;
+        int row = 0;
+
+        for (int i = 0; i < boardSize; i++)
+        {
+            int count = 0;
+            int blank = 0;
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (boardDoubleList[i][j] == playerNumber)
+                {
+                    count++;
+                }
+                if (boardDoubleList[i][j] == 0)
+                {
+                    blank++;
+                }
+            }
+            if (count > mostCount && blank != 0)
+            {
+                mostCount = count;
+                row = i;
+            }
+        }
+
+        for (int j = 0; j < boardSize; j++)
+        {
+            if (boardDoubleList[row][j] == playerNumber)
+            {
+                list.Add(new Vector2(row, j));
+            }
+        }
+
+        return list.Count;
+    }
+
+    public List<Vector2> GetColNearlyALineBlank(int playerNumber)
+    {
+        List<Vector2> list = new List<Vector2>();
+
+        int mostCount = 0;
+        int col = 0;
+
+        for (int i = 0; i < boardSize; i++)
+        {
+            int count = 0;
+            int blank = 0;
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (boardDoubleList[j][i] == playerNumber)
+                {
+                    count++;
+                }
+                if (boardDoubleList[j][i] == 0)
+                {
+                    blank++;
+                }
+            }
+            if (count > mostCount && blank != 0)
+            {
+                mostCount = count;
+                col = i;
+            }
+        }
+
+        for (int i = 0; i < boardSize; i++)
+        {
+            if (boardDoubleList[i][col] == 0)
+            {
+                list.Add(new Vector2(i, col));
+            }
+        }
+
+        return list;
+    }
+    public int GetColNearlyALineCount(int playerNumber)
+    {
+        List<Vector2> list = new List<Vector2>();
+
+        int mostCount = 0;
+        int col = 0;
+
+        for (int i = 0; i < boardSize; i++)
+        {
+            int count = 0;
+            int blank = 0;
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (boardDoubleList[j][i] == playerNumber)
+                {
+                    count++;
+                }
+                if (boardDoubleList[j][i] == 0)
+                {
+                    blank++;
+                }
+            }
+            if (count > mostCount && blank != 0)
+            {
+                mostCount = count;
+                col = i;
+            }
+        }
+
+        for (int i = 0; i < boardSize; i++)
+        {
+            if (boardDoubleList[i][col] == playerNumber)
+            {
+                list.Add(new Vector2(i, col));
+            }
+        }
+
+        return list.Count;
+    }
+
+    public List<Vector2> GetDiaNearlyALineBlank(int playerNumber)
+    {
+        List<Vector2> list = new List<Vector2>();
+
+        int mostCount = 0;
+        int diagonal = 0;
+
+        int count = 0;
+        int blank = 0;
+        for (int i = 0; i < boardSize; i++)
+        {
+            if (boardDoubleList[i][i] == playerNumber)
+            {
+                count++;
+            }
+            if (boardDoubleList[i][i] == 0)
+            {
+                blank++;
+            }
+        }
+        if (count > mostCount && blank != 0)
+        {
+            mostCount = count;
+            diagonal = 1;
+        }
+
+        count = 0;
+        blank = 0;
+        for (int i = 0; i < boardSize; i++)
+        {
+            if (boardDoubleList[boardSize - i - 1][i] == playerNumber)
+            {
+                count++;
+            }
+            if (boardDoubleList[boardSize - i - 1][i] == 0)
+            {
+                blank++;
+            }
+        }
+        if (count > mostCount && blank != 0)
+        {
+            mostCount = count;
+            diagonal = -1;
+        }
+
+        if (diagonal == 1)
+        {
+
+            for (int i = 0; i < boardSize; i++)
+            {
+                if (boardDoubleList[i][i] == 0)
+                {
+                    list.Add(new Vector2(i, i));
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < boardSize; i++)
+            {
+                if (boardDoubleList[i][boardSize - i - 1] == 0)
+                {
+                    list.Add(new Vector2(i, boardSize - i - 1));
+                }
+            }
+        }
+
+
+        return list;
+    }
+
+    public int GetDiaNearlyALineCount(int playerNumber)
+    {
+        List<Vector2> list = new List<Vector2>();
+
+        int mostCount = 0;
+        int diagonal = 0;
+
+        int count = 0;
+        int blank = 0;
+        for (int i = 0; i < boardSize; i++)
+        {
+            if (boardDoubleList[i][i] == playerNumber)
+            {
+                count++;
+            }
+            if (boardDoubleList[i][i] == 0)
+            {
+                blank++;
+            }
+        }
+        if (count > mostCount && blank != 0)
+        {
+            mostCount = count;
+            diagonal = 1;
+        }
+
+        count = 0;
+        blank = 0;
+        for (int i = 0; i < boardSize; i++)
+        {
+            if (boardDoubleList[boardSize - i - 1][i] == playerNumber)
+            {
+                count++;
+            }
+            else if (boardDoubleList[boardSize - i - 1][i] == 0)
+            {
+                blank++;
+            }
+        }
+        if (count > mostCount && blank != 0)
+        {
+            mostCount = count;
+            diagonal = -1;
+        }
+
+        if (diagonal == 1)
+        {
+
+            for (int i = 0; i < boardSize; i++)
+            {
+                if (boardDoubleList[i][i] == playerNumber)
+                {
+                    list.Add(new Vector2(i, i));
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < boardSize; i++)
+            {
+                if (boardDoubleList[i][boardSize - i - 1] == playerNumber)
+                {
+                    list.Add(new Vector2(i, boardSize - i - 1));
+                }
+            }
+        }
+
+
+        return list.Count;
     }
 
     public List<Vector2> GetEmptyCornerBlanks()

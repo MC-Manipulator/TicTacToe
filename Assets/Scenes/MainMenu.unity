@@ -846,11 +846,6 @@ MonoBehaviour:
   - {fileID: 2107625000767047521}
   ResolutonDropdown: {fileID: 2107625000767047520}
   FullscreenToggle: {fileID: 2107625000767047519}
-  AudioClips:
-  - {fileID: 8300000, guid: b0d377cd10e8ca54c8d05921de891e23, type: 3}
-  - {fileID: 8300000, guid: 6c7e1b2746de734428b9f391e62dbc28, type: 3}
-  - {fileID: 8300000, guid: e3b1a834422d7c441b51fae85a8522f2, type: 3}
-  - {fileID: 8300000, guid: abe460b6293f84f46b38f3603d1a3659, type: 3}
 --- !u!4 &221438260
 Transform:
   m_ObjectHideFlags: 0
@@ -3102,12 +3097,6 @@ MonoBehaviour:
   GameModeSelectPanel: {fileID: 746634834}
   DifficultySelectPanel: {fileID: 1253646150}
   BackButton: {fileID: 1813415403}
-  AudioClips:
-  - {fileID: 8300000, guid: b0d377cd10e8ca54c8d05921de891e23, type: 3}
-  - {fileID: 8300000, guid: 6c7e1b2746de734428b9f391e62dbc28, type: 3}
-  - {fileID: 8300000, guid: e3b1a834422d7c441b51fae85a8522f2, type: 3}
-  - {fileID: 8300000, guid: abe460b6293f84f46b38f3603d1a3659, type: 3}
-  MenuBGM: {fileID: 8300000, guid: 565fb03ef86f55f4dbb2abe3d4f92199, type: 3}
 --- !u!1 &1706966928
 GameObject:
   m_ObjectHideFlags: 0
@@ -3738,6 +3727,14 @@ MonoBehaviour:
   masterVolume: 0
   bgmVolume: 0
   sfxVolume: 0
+  SFXClips:
+  - {fileID: 8300000, guid: b0d377cd10e8ca54c8d05921de891e23, type: 3}
+  - {fileID: 8300000, guid: 6c7e1b2746de734428b9f391e62dbc28, type: 3}
+  - {fileID: 8300000, guid: e3b1a834422d7c441b51fae85a8522f2, type: 3}
+  - {fileID: 8300000, guid: abe460b6293f84f46b38f3603d1a3659, type: 3}
+  BgmClips:
+  - {fileID: 8300000, guid: 565fb03ef86f55f4dbb2abe3d4f92199, type: 3}
+  - {fileID: 8300000, guid: c0475ca2e5877db4e9349fccb3c38f9c, type: 3}
 --- !u!4 &1883106136
 Transform:
   m_ObjectHideFlags: 0

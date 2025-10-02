@@ -15,6 +15,13 @@ public class AudioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] private float bgmVolume;
     [Range(0, 1)] [SerializeField] private float sfxVolume;
 
+    [Header("Audio Referrence")]
+    [SerializeField] private List<AudioClip> SFXClips; // 0:select 1:switch 2:confirm 3:back
+    [SerializeField] private List<AudioClip> BgmClips; // 0:menu 1:game
+
+    private List<AudioResource> SFXResources; // 0:select 1:switch 2:confirm 3:back
+    private List<AudioResource> BgmResources; // 0:menu 1:game
+
     public float MasterVolume
     {
         get { return masterVolume; }
@@ -59,6 +66,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private class AudioResource
+    {
+        public string name { get; private set; }
+        public AudioClip clip { get; private set; }
+
+        public AudioResource(string name, AudioClip clip)
+        {
+            this.name = name;
+            this.clip = clip;
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -68,11 +87,41 @@ public class AudioManager : MonoBehaviour
 
             InitializeAudioSources();
             LoadVolumeSettings();
+            LoadAudioResources();
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void LoadAudioResources()
+    {
+        SFXResources = new List<AudioResource>();
+        SFXResources.Add(new AudioResource("select", SFXClips[0]));
+        SFXResources.Add(new AudioResource("switch", SFXClips[1]));
+        SFXResources.Add(new AudioResource("confirm", SFXClips[2]));
+        SFXResources.Add(new AudioResource("back", SFXClips[3]));
+
+        BgmResources = new List<AudioResource>();
+        BgmResources.Add(new AudioResource("menu", BgmClips[0]));
+        BgmResources.Add(new AudioResource("game", BgmClips[1]));
+    }
+
+    public void PlaySFX(string name)
+    {
+        PlaySound(SFXResources.Find((AudioResource a) =>
+        {
+            return a.name == name;
+        }).clip);
+    }
+
+    public void PlayBGM(string name)
+    {
+        PlayMusic(BgmResources.Find((AudioResource a) =>
+        {
+            return a.name == name;
+        }).clip);
     }
 
     private void InitializeAudioSources()
@@ -86,14 +135,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayMusic(AudioClip music)
+    private void PlayMusic(AudioClip music)
     {
         bgmSource.clip = music;
         bgmSource.volume = bgmVolume * masterVolume;
         bgmSource.Play();
     }
 
-    public void PlaySound(AudioClip clip, Vector3 position = default)
+    private void PlaySound(AudioClip clip, Vector3 position = default)
     {
         AudioSource source = GetAvailableSoundSource();
         source.transform.position = position;

@@ -11,37 +11,26 @@ public class MenuManager : MonoBehaviour
     //public GameObject SettingPanel;
     public GameObject GameModeSelectPanel;
     public GameObject DifficultySelectPanel;
-    /*
-    public Slider MasterVolumeSlider;
-    public Slider BGMVolumeSlider;
-    public Slider SFXVolumeSlider;
-    public List<Button> LanguageButtonList;
-    public TMP_Dropdown ResolutonDropdown;
-    public Toggle FullscreenToggle;*/
     public Button BackButton;
-
-    [Header("Audio Referrence")]
-    public List<AudioClip> AudioClips; // 0:select 1:confirm 2:confirm 3:back
-    public AudioClip MenuBGM;
 
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.Instance.PlayMusic(MenuBGM);
+        AudioManager.Instance.PlayBGM("menu");
     }
 
     public void OpenGameModeSelectPanel()
     {
         BackButton.onClick.RemoveAllListeners();
         BackButton.onClick.AddListener(CloseGameModeSelectPanel);
-        AudioManager.Instance.PlaySound(AudioClips[0]);
+        AudioManager.Instance.PlaySFX("select");
         GameModeSelectPanel.SetActive(true);
     }
 
     public void CloseGameModeSelectPanel()
     {
         BackButton.onClick.RemoveAllListeners();
-        AudioManager.Instance.PlaySound(AudioClips[3]);
+        AudioManager.Instance.PlaySFX("back");
         GameModeSelectPanel.SetActive(false);
     }
 
@@ -49,7 +38,7 @@ public class MenuManager : MonoBehaviour
     {
         BackButton.onClick.RemoveAllListeners();
         BackButton.onClick.AddListener(CloseDifficultySelectPanel);
-        AudioManager.Instance.PlaySound(AudioClips[0]);
+        AudioManager.Instance.PlaySFX("select");
         DifficultySelectPanel.SetActive(true);
     }
 
@@ -57,13 +46,13 @@ public class MenuManager : MonoBehaviour
     {
         BackButton.onClick.RemoveAllListeners();
         BackButton.onClick.AddListener(CloseGameModeSelectPanel);
-        AudioManager.Instance.PlaySound(AudioClips[3]);
+        AudioManager.Instance.PlaySFX("back");
         DifficultySelectPanel.SetActive(false);
     }
 
     public void StartGameInHotseatMode()
     {
-        AudioManager.Instance.PlaySound(AudioClips[2]);
+        AudioManager.Instance.PlaySFX("confirm");
         GameInfoManager.Instance.CurrentGameInfo.BoardSize = 3;
         GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode = GameMode.Hotseat;
         SceneManager.LoadScene("Game");
@@ -71,8 +60,8 @@ public class MenuManager : MonoBehaviour
 
     public void StartGameInComputerMode(int difficulty)
     {
-        AudioManager.Instance.PlaySound(AudioClips[2]);
-        
+        AudioManager.Instance.PlaySFX("confirm");
+
         GameInfoManager.Instance.CurrentGameInfo.BoardSize = 3;
         GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode = GameMode.Computer;
         if (difficulty == 1)

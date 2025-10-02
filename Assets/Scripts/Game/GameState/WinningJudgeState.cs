@@ -30,7 +30,7 @@ public class WinningJudgeState : AbstractGameState
             {
                 if (currentPlayerNumber == 1)
                 {
-                    GameManager.Instance.Controller.ChangeState(new ComputerTurnState(), true);
+                    GameManager.Instance.Controller.ChangeState(new ComputerTurnState(), false);
                 }
                 else
                 {

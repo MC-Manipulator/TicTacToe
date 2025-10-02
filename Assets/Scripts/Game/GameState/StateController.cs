@@ -33,7 +33,7 @@ public class StateController
 
     private IEnumerator DelayExit(AbstractGameState state)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         CurrentGameState = state;
         CurrentGameState.StateEnter();
     }

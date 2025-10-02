@@ -19,10 +19,21 @@ public class PlayerTurnState : AbstractGameState
 
     public override void StateEnter()
     {
-        string trunStatement = 
-            new LocalizedString(tableName, "PlayersTurn_1").GetLocalizedString() +
-            playerNumber.ToString() +
-            new LocalizedString(tableName, "PlayersTurn_2").GetLocalizedString();
+        string trunStatement = "";
+        if (GameInfoManager.Instance.CurrentGameInfo.CurrentGameMode == GameMode.Computer)
+        {
+            trunStatement =
+                new LocalizedString(tableName, "PlayersTurn_1").GetLocalizedString() +
+                new LocalizedString(tableName, "PlayersTurn_2").GetLocalizedString();
+        }
+        else
+        {
+            trunStatement =
+                new LocalizedString(tableName, "PlayersTurn_1").GetLocalizedString() +
+                playerNumber.ToString() +
+                new LocalizedString(tableName, "PlayersTurn_2").GetLocalizedString();
+        }
+
         GameManager.Instance.TurnStatementText.text = trunStatement;
     }
 }
